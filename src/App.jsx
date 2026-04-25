@@ -1,12 +1,11 @@
 import { useState, useRef } from "react";
-// Importamos los assets
+// Importaciones con rutas relativas estándar para evitar errores de VS Code
 import videoFondo from "./assets/video1.mp4";
 import imgRosa from "./assets/img0.png";
 import cancion from "./assets/song1.mp3";
-import fondoFinal from "./assets/bg.jpeg";
+import fondoFinal from "./assets/bg.jpg";
 
 function App() {
-  // Ahora empezamos directamente en el estado 'VIDEO'
   const [estado, setEstado] = useState("VIDEO");
   const [invitacionVisible, setInvitacionVisible] = useState(false);
 
@@ -20,8 +19,10 @@ function App() {
   };
 
   const abrirCarta = () => {
-    // El audio se activa aquí tras la interacción del usuario
-    audioRef.current.play().catch((e) => console.error("Error audio:", e));
+    // Inicia la música al interactuar con la rosa
+    audioRef.current
+      .play()
+      .catch((e) => console.error("Error al reproducir audio:", e));
 
     setEstado("TRANSICION");
     setTimeout(() => {
@@ -32,9 +33,7 @@ function App() {
 
   return (
     <div className="min-h-screen w-full bg-black flex items-center justify-center font-sans antialiased relative overflow-hidden">
-      {/* ==============================================================
-          PANTALLA 2: LA INVITACIÓN (CARTA FINAL)
-          ============================================================== */}
+      {/* PANTALLA DE LA INVITACIÓN FINAL */}
       {(estado === "TRANSICION" || estado === "CARTA") && (
         <div
           className={`w-full h-full min-h-screen sm:h-[95vh] sm:max-w-[440px] bg-[#FCF9EA] sm:rounded-3xl shadow-2xl absolute overflow-hidden flex flex-col items-center pt-12 pb-10 sm:border-8 border-amber-500/30 transition-opacity duration-[2000ms] ease-in-out z-0 ${
@@ -59,12 +58,12 @@ function App() {
                 </span>
               </h1>
             </div>
-            <p className="text-[12px] tracking-[0.6em] text-amber-700 uppercase font-serif mt-2 border-b-2 border-amber-500/20 pb-2">
+            <p className="text-[12px] tracking-[0.6em] text-amber-700 uppercase font-serif mt-2 border-b-2 border-amber-500/20 pb-2 relative z-10">
               Mis Quince Años
             </p>
           </div>
 
-          <div className="w-[90%] flex flex-col items-center mt-12 mb-8 p-6 bg-white/40 rounded-xl z-10 border border-amber-500/10">
+          <div className="w-[90%] flex flex-col items-center mt-12 mb-8 p-6 bg-white/40 rounded-xl z-10 border border-amber-500/10 backdrop-blur-sm">
             <p className="text-[8px] tracking-[0.3em] text-amber-800 uppercase font-serif mb-5 pb-1 border-b border-amber-800/20">
               Mis Queridos Padres
             </p>
@@ -79,16 +78,13 @@ function App() {
         </div>
       )}
 
-      {/* ==============================================================
-          PANTALLA 1: VIDEO (AUTOPLAY) Y LUEGO ROSA
-          ============================================================== */}
+      {/* PANTALLA DE VIDEO Y TRANSICIÓN DE LA ROSA */}
       {(estado === "VIDEO" || estado === "ROSA" || estado === "TRANSICION") && (
         <div
           className={`w-full h-full min-h-screen sm:h-[95vh] sm:max-w-[440px] bg-black sm:rounded-md shadow-2xl relative border-none transition-opacity duration-[1500ms] ease-in-out z-10 ${
             estado === "TRANSICION" ? "opacity-0" : "opacity-100"
           }`}
         >
-          {/* VIDEO DE FONDO - scale-110 y Muted para permitir Autoplay */}
           <video
             ref={videoRef}
             src={videoFondo}
@@ -96,33 +92,35 @@ function App() {
             autoPlay
             muted
             onEnded={terminarVideo}
-            className="absolute inset-0 w-full h-full object-cover z-0 scale-110"
+            className="absolute inset-0 w-full h-full object-cover z-0 scale-105"
           />
 
-          {/* OVERLAY DE LA ROSA SOBRE BG.JPEG (Aparece al terminar el video) */}
+          {/* Overlay con la imagen bg.jpeg (Transparencia ajustada para el cober oscuro inferior) */}
+          {/* Ajuste: pb-[10%] para bajar los elementos, gradiante ajustado para negro puro abajo (1) y transparente arriba (0) */}
           <div
-            className={`absolute inset-0 z-10 flex flex-col justify-end items-center pb-[25%] transition-opacity duration-[2000ms] ease-in-out ${
+            className={`absolute inset-0 z-10 flex flex-col justify-end items-center pb-[10%] transition-opacity duration-[2000ms] ease-in-out ${
               estado === "ROSA"
                 ? "opacity-100 pointer-events-auto"
                 : "opacity-0 pointer-events-none"
             }`}
             style={{
-              backgroundImage: `linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.75)), url(${fondoFinal})`,
+              backgroundImage: `linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0)), url(${fondoFinal})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
             <button
               onClick={abrirCarta}
-              className="flex flex-col items-center group bg-transparent mb-10 border-none outline-none"
+              className="flex flex-col items-center group bg-transparent border-none outline-none focus:ring-0 active:scale-95 transition-transform z-20"
             >
-              <p className="text-amber-300 text-sm font-light tracking-[0.3em] uppercase mb-6 font-serif drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+              <p className="text-amber-200 text-sm font-light tracking-[0.3em] uppercase mb-6 font-serif drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
                 Pulsa aquí
               </p>
+              {/* Ajuste: w-20 h-20 para una rosa más pequeña */}
               <img
                 src={imgRosa}
-                alt="Pulsa"
-                className="w-28 h-28 object-contain animate-pulse drop-shadow-[0_0_30px_rgba(255,0,0,0.7)] z-20"
+                alt="Rosa Encantada"
+                className="w-20 h-20 object-contain animate-pulse drop-shadow-[0_0_30px_rgba(255,0,0,0.8)]"
               />
             </button>
           </div>
