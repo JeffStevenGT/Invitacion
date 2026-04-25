@@ -25,30 +25,37 @@ function App() {
     }, 1500);
   };
 
-  // --- DISEÑO: Fondo de Bella y Bestia con cobertura total ---
+  // --- ESTILOS LIMPIOS PARA EVITAR ERRORES DE RUTA ---
+
+  // 1. Capa sobre el video para que combine con bg.jpeg (Azul noche traslúcido)
+  const estiloTinteVideo = {
+    background: `radial-gradient(circle, rgba(5, 11, 20, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%)`,
+  };
+
+  // 2. Fondo final con la imagen bg.jpeg
   const bgImagenEscena = {
-    backgroundImage: `linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.1) 100%), url(${fondoFinal})`,
+    backgroundImage: `linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 100%), url(${fondoFinal})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   };
 
-  // --- DISEÑO: Resplandor Mágico de la Rosa ---
-  // Combinamos varios drop-shadows para crear un efecto de "bloom" (brillo nebuloso)
+  // 3. Resplandor de la Rosa
   const estiloRosaMagica = {
     filter:
-      "drop-shadow(0 0 10px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(255, 50, 50, 0.6)) drop-shadow(0 0 60px rgba(255, 100, 100, 0.3))",
+      "drop-shadow(0 0 10px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(255, 50, 50, 0.6))",
   };
 
   return (
     <div className="h-[100dvh] w-full bg-black flex items-center justify-center font-sans antialiased relative overflow-hidden z-10">
-      {/* --- SECCIÓN: CARTA FINAL --- */}
+      {/* --- CARTA FINAL --- */}
       {(estado === "TRANSICION" || estado === "CARTA") && (
         <div
           className={`w-full h-full sm:max-w-[440px] sm:h-[95vh] bg-[#FCF9EA] sm:rounded-3xl shadow-2xl absolute overflow-hidden flex flex-col items-center transition-opacity duration-[2000ms] ease-in-out z-0 ${
             invitacionVisible ? "opacity-100" : "opacity-0"
           }`}
         >
+          {/* Contenido de la invitación */}
           <div className="z-10 flex flex-col items-center w-full px-[5%] text-center mt-[15%] text-sky-950">
             <div className="relative flex items-center justify-center w-full py-2">
               <span
@@ -89,13 +96,14 @@ function App() {
         </div>
       )}
 
-      {/* --- SECCIÓN: VIDEO Y ROSA RESPLANDECIENTE --- */}
+      {/* --- PANTALLA VIDEO Y ROSA --- */}
       {(estado === "VIDEO" || estado === "ROSA" || estado === "TRANSICION") && (
         <div
           className={`w-full h-full sm:max-w-[440px] sm:h-[95vh] bg-black sm:rounded-md relative border-none transition-opacity duration-[1500ms] z-10 ${
             estado === "TRANSICION" ? "opacity-0" : "opacity-100"
           }`}
         >
+          {/* VIDEO BASE */}
           <video
             ref={videoRef}
             src={videoFondo}
@@ -106,17 +114,22 @@ function App() {
             className="absolute inset-0 w-full h-full object-cover z-0 scale-105"
           />
 
-          {/* Overlay de la Rosa con BG.JPEG */}
+          {/* NUEVA CAPA: Tinte de ambiente para hacer juego con bg.jpeg */}
           <div
-            className={`absolute inset-0 z-10 min-w-full min-h-full flex flex-col justify-end items-center transition-opacity duration-[2000ms] ease-in-out ${
+            className={`absolute inset-0 z-10 pointer-events-none transition-opacity duration-1000 ${estado === "ROSA" ? "opacity-0" : "opacity-100"}`}
+            style={estiloTinteVideo}
+          ></div>
+
+          {/* OVERLAY DE LA ROSA (BG.JPEG) */}
+          <div
+            className={`absolute inset-0 z-20 min-w-full min-h-full flex flex-col justify-end items-center transition-opacity duration-[2000ms] ease-in-out ${
               estado === "ROSA"
                 ? "opacity-100 pointer-events-auto"
                 : "opacity-0 pointer-events-none"
             }`}
             style={bgImagenEscena}
           >
-            {/* Contenedor del botón más abajo (pb-[10%]) */}
-            <div className="flex flex-col items-center mb-[12%] pb-[5%] z-20">
+            <div className="flex flex-col items-center mb-[12%] pb-[5%] z-30">
               <p className="text-amber-200 text-[3.5vw] sm:text-sm font-light tracking-[0.4em] uppercase mb-[1vh] font-serif drop-shadow-[0_2px_15px_rgba(0,0,0,1)] relative z-10">
                 Pulsa aquí
               </p>
@@ -125,7 +138,6 @@ function App() {
                 onClick={abrirCarta}
                 className="bg-transparent border-none outline-none focus:ring-0 active:scale-90 transition-transform relative z-10"
               >
-                {/* Rosa con Triple Resplandor y animación de brillo extra */}
                 <img
                   src={imgRosa}
                   alt="Rosa"
