@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-// Importaciones con rutas relativas estándar para evitar errores de VS Code
 import videoFondo from "./assets/video1.mp4";
 import imgRosa from "./assets/img0.png";
 import cancion from "./assets/song1.mp3";
@@ -19,11 +18,7 @@ function App() {
   };
 
   const abrirCarta = () => {
-    // Inicia la música al interactuar con la rosa
-    audioRef.current
-      .play()
-      .catch((e) => console.error("Error al reproducir audio:", e));
-
+    audioRef.current.play().catch((e) => console.error("Error audio:", e));
     setEstado("TRANSICION");
     setTimeout(() => {
       setEstado("CARTA");
@@ -32,59 +27,66 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-black flex items-center justify-center font-sans antialiased relative overflow-hidden">
-      {/* PANTALLA DE LA INVITACIÓN FINAL */}
+    // h-[100dvh] asegura que ocupe el 100% real de la pantalla móvil sin que la barra del navegador estorbe
+    <div className="h-[100dvh] w-full bg-black flex items-center justify-center font-sans antialiased relative overflow-hidden">
+      {/* ==========================================
+          PANTALLA: CARTA FINAL (RESPONSIVA)
+          ========================================== */}
       {(estado === "TRANSICION" || estado === "CARTA") && (
         <div
-          className={`w-full h-full min-h-screen sm:h-[95vh] sm:max-w-[440px] bg-[#FCF9EA] sm:rounded-3xl shadow-2xl absolute overflow-hidden flex flex-col items-center pt-12 pb-10 sm:border-8 border-amber-500/30 transition-opacity duration-[2000ms] ease-in-out z-0 ${
+          className={`w-full h-full sm:max-w-[440px] sm:h-[95vh] bg-[#FCF9EA] sm:rounded-3xl shadow-2xl absolute overflow-hidden flex flex-col items-center transition-opacity duration-[2000ms] ease-in-out z-0 ${
             invitacionVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="z-10 flex flex-col items-center w-full px-6 text-center mt-10 text-sky-950">
+          <div className="z-10 flex flex-col items-center w-full px-[5%] text-center mt-[15%] text-sky-950">
             <div className="relative flex items-center justify-center w-full py-2">
+              {/* Texto proporcional al ancho de pantalla (vw) */}
               <span
-                className="absolute text-[150px] font-light text-amber-500 opacity-20 select-none tracking-tighter"
+                className="absolute text-[35vw] sm:text-[150px] font-light text-amber-500 opacity-20 select-none tracking-tighter"
                 style={{ fontFamily: "'Great Vibes', cursive" }}
               >
                 XV
               </span>
               <h1
-                className="text-8xl z-10 font-light drop-shadow-lg"
+                className="text-[20vw] sm:text-[90px] z-10 font-light drop-shadow-lg"
                 style={{ fontFamily: "'Great Vibes', cursive" }}
               >
                 Valeria
-                <span className="text-amber-500 text-3xl align-super ml-1">
+                <span className="text-amber-500 text-[6vw] sm:text-3xl align-super ml-1">
                   ✧
                 </span>
               </h1>
             </div>
-            <p className="text-[12px] tracking-[0.6em] text-amber-700 uppercase font-serif mt-2 border-b-2 border-amber-500/20 pb-2 relative z-10">
+            <p className="text-[3vw] sm:text-[12px] tracking-[0.6em] text-amber-700 uppercase font-serif mt-2 border-b-2 border-amber-500/20 pb-2 relative z-10">
               Mis Quince Años
             </p>
           </div>
 
-          <div className="w-[90%] flex flex-col items-center mt-12 mb-8 p-6 bg-white/40 rounded-xl z-10 border border-amber-500/10 backdrop-blur-sm">
-            <p className="text-[8px] tracking-[0.3em] text-amber-800 uppercase font-serif mb-5 pb-1 border-b border-amber-800/20">
+          <div className="w-[85%] flex flex-col items-center mt-[10%] p-[5%] bg-white/40 rounded-xl z-10 border border-amber-500/10 backdrop-blur-sm">
+            <p className="text-[2.5vw] sm:text-[8px] tracking-[0.3em] text-amber-800 uppercase font-serif mb-4">
               Mis Queridos Padres
             </p>
-            <p className="text-red-950 font-serif italic text-base leading-tight">
+            <p className="text-red-950 font-serif italic text-[4.5vw] sm:text-base">
               Rosa López
             </p>
-            <p className="text-red-950/70 text-sm my-1">&</p>
-            <p className="text-red-950 font-serif italic text-base leading-tight mb-8">
+            <p className="text-red-950/70 text-[3vw] sm:text-sm my-1">&</p>
+            <p className="text-red-950 font-serif italic text-[4.5vw] sm:text-base">
               Abel Cairampoma
             </p>
           </div>
         </div>
       )}
 
-      {/* PANTALLA DE VIDEO Y TRANSICIÓN DE LA ROSA */}
+      {/* ==========================================
+          PANTALLA: VIDEO Y TRANSICIÓN ROSA
+          ========================================== */}
       {(estado === "VIDEO" || estado === "ROSA" || estado === "TRANSICION") && (
         <div
-          className={`w-full h-full min-h-screen sm:h-[95vh] sm:max-w-[440px] bg-black sm:rounded-md shadow-2xl relative border-none transition-opacity duration-[1500ms] ease-in-out z-10 ${
+          className={`w-full h-full sm:max-w-[440px] sm:h-[95vh] bg-black sm:rounded-md relative border-none transition-opacity duration-[1500ms] z-10 ${
             estado === "TRANSICION" ? "opacity-0" : "opacity-100"
           }`}
         >
+          {/* Video escalado ligeramente para evitar bordes blancos en cualquier proporción */}
           <video
             ref={videoRef}
             src={videoFondo}
@@ -95,34 +97,37 @@ function App() {
             className="absolute inset-0 w-full h-full object-cover z-0 scale-105"
           />
 
-          {/* Overlay con la imagen bg.jpeg (Transparencia ajustada para el cober oscuro inferior) */}
-          {/* Ajuste: pb-[10%] para bajar los elementos, gradiante ajustado para negro puro abajo (1) y transparente arriba (0) */}
+          {/* OVERLAY: IMAGEN BG.JPEG CON COBER NEGRO INFERIOR */}
           <div
-            className={`absolute inset-0 z-10 flex flex-col justify-end items-center pb-[10%] transition-opacity duration-[2000ms] ease-in-out ${
+            className={`absolute inset-0 z-10 flex flex-col justify-end items-center transition-opacity duration-[2000ms] ${
               estado === "ROSA"
                 ? "opacity-100 pointer-events-auto"
                 : "opacity-0 pointer-events-none"
             }`}
             style={{
-              backgroundImage: `linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0)), url(${fondoFinal})`,
+              backgroundImage: `linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%), url(${fondoFinal})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
-            <button
-              onClick={abrirCarta}
-              className="flex flex-col items-center group bg-transparent border-none outline-none focus:ring-0 active:scale-95 transition-transform z-20"
-            >
-              <p className="text-amber-200 text-sm font-light tracking-[0.3em] uppercase mb-6 font-serif drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
+            {/* Contenedor del botón posicionado con porcentaje inferior */}
+            <div className="flex flex-col items-center mb-[12%] z-20">
+              <p className="text-amber-200 text-[3.5vw] sm:text-sm font-light tracking-[0.4em] uppercase mb-[5vh] font-serif drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
                 Pulsa aquí
               </p>
-              {/* Ajuste: w-20 h-20 para una rosa más pequeña */}
-              <img
-                src={imgRosa}
-                alt="Rosa Encantada"
-                className="w-20 h-20 object-contain animate-pulse drop-shadow-[0_0_30px_rgba(255,0,0,0.8)]"
-              />
-            </button>
+
+              <button
+                onClick={abrirCarta}
+                className="bg-transparent border-none outline-none focus:ring-0 active:scale-90 transition-transform"
+              >
+                {/* Rosa con tamaño basado en porcentaje de ancho (vw) */}
+                <img
+                  src={imgRosa}
+                  alt="Rosa Encantada"
+                  className="w-[18vw] max-w-[80px] h-auto object-contain animate-pulse drop-shadow-[0_0_30px_rgba(255,0,0,0.8)]"
+                />
+              </button>
+            </div>
           </div>
         </div>
       )}
