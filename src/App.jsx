@@ -212,7 +212,24 @@ function App() {
         .animacion-rosa { animation: latidoRosa 2s infinite ease-in-out; }
       `}</style>
 
-      <div className="w-full h-full sm:max-w-[440px] sm:h-[95vh] bg-black sm:rounded-md relative overflow-hidden z-10 shadow-2xl">
+      {/* FONDO AMBIENTAL PARA DESKTOP/TABLET (Oculto en móvil) */}
+      <div className="hidden sm:block absolute inset-0 z-0 bg-black overflow-hidden pointer-events-none">
+        <img
+          src={fondoFinal}
+          className="w-full h-full object-cover opacity-30 blur-[40px] scale-110"
+          alt="desktop-bg"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+        {/* Destellos en el fondo de escritorio */}
+        <div className="absolute top-1/4 left-1/4 w-[30vw] h-[30vw] bg-amber-600/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div
+          className="absolute bottom-1/4 right-1/4 w-[30vw] h-[30vw] bg-amber-500/10 rounded-full blur-[120px] animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
+      </div>
+
+      {/* CONTENEDOR PRINCIPAL (Móvil Full / Desktop Tarjeta Flotante) */}
+      <div className="w-full h-full sm:max-w-[420px] md:max-w-[440px] sm:h-[92vh] sm:max-h-[900px] bg-black sm:rounded-[2.5rem] sm:border sm:border-amber-500/20 sm:shadow-[0_0_60px_rgba(251,191,36,0.15)] relative overflow-hidden z-10 transition-all duration-500">
         {/* VIDEOS */}
         <video
           ref={videoRef1}
@@ -235,7 +252,7 @@ function App() {
         {/* --- CAPA TRASPARENTE DE AJUSTE DE COLOR SOBRE VIDEOS --- */}
         <div className="absolute inset-0 bg-black/50 z-5 pointer-events-none"></div>
 
-        {/* ELEMENTOS AMBIENTALES (FLORES Y LUCES) */}
+        {/* ELEMENTOS AMBIENTALES */}
         <div
           className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-1000 ${faseTexto === "INVITACION" || faseTexto === "DATOS" || faseTexto === "DETALLES" ? "opacity-0" : "opacity-100"}`}
         >
@@ -253,7 +270,7 @@ function App() {
           />
         </div>
 
-        {/* LLUVIA DORADA (SIEMPRE VISIBLE EN VIDEO 2) */}
+        {/* LLUVIA DORADA (Siempre visible) */}
         <div
           className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-[1500ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
         >
@@ -496,7 +513,7 @@ function App() {
                     href={generarLinkCalendario()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md`}
+                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 sm:hover:scale-[1.03] sm:hover:border-amber-400 flex items-center justify-center gap-3 backdrop-blur-md`}
                   >
                     <svg
                       className="w-4 h-4"
@@ -517,7 +534,7 @@ function App() {
                     href={linkWhatsApp}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md`}
+                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 sm:hover:scale-[1.03] sm:hover:border-amber-400 flex items-center justify-center gap-3 backdrop-blur-md`}
                   >
                     <svg
                       className="w-4 h-4"
@@ -538,7 +555,7 @@ function App() {
                     href={linkMaps}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md`}
+                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 sm:hover:scale-[1.03] sm:hover:border-amber-400 flex items-center justify-center gap-3 backdrop-blur-md`}
                   >
                     <svg
                       className="w-4 h-4"
@@ -566,12 +583,12 @@ function App() {
 
               <img
                 src={img9}
-                className={`absolute bottom-0 -left-23 w-[55vw] max-w-[360px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"}`}
+                className={`absolute bottom-0 -left-23 w-[55vw] max-w-[360px] sm:w-[220px] sm:max-w-none sm:-left-6 h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"}`}
                 alt="princesa"
               />
               <img
                 src={img10}
-                className={`absolute bottom-0 -right-23 w-[55vw] max-w-[360px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"}`}
+                className={`absolute bottom-0 -right-23 w-[55vw] max-w-[360px] sm:w-[220px] sm:max-w-none sm:-right-6 h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"}`}
                 alt="bestia"
               />
             </div>
@@ -580,11 +597,11 @@ function App() {
 
         {/* BOTONES DE NAVEGACIÓN MANUAL */}
         <div
-          className={`absolute bottom-8 left-0 right-0 w-full flex justify-between px-3 z-40 pointer-events-none transition-opacity duration-1000 ${estado === "VIDEO2" && faseTexto !== "OCULTO" ? "opacity-100" : "opacity-0"}`}
+          className={`absolute bottom-8 left-0 right-0 w-full flex justify-between px-3 sm:px-6 z-40 pointer-events-none transition-opacity duration-1000 ${estado === "VIDEO2" && faseTexto !== "OCULTO" ? "opacity-100" : "opacity-0"}`}
         >
           <button
             onClick={handlePrev}
-            className={`pointer-events-auto w-10 h-10 rounded-full bg-black/30 border border-amber-500/30 flex items-center justify-center backdrop-blur-md text-amber-200 hover:bg-black/50 hover:border-amber-400 active:scale-95 transition-all shadow-[0_0_15px_rgba(251,191,36,0.15)] ${fasesLista.indexOf(faseTexto) > 0 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            className={`pointer-events-auto w-10 h-10 rounded-full bg-black/30 border border-amber-500/30 flex items-center justify-center backdrop-blur-md text-amber-200 sm:hover:bg-black/50 sm:hover:border-amber-400 active:scale-95 transition-all shadow-[0_0_15px_rgba(251,191,36,0.15)] ${fasesLista.indexOf(faseTexto) > 0 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           >
             <svg
               className="w-6 h-6 ml-[-2px]"
@@ -602,7 +619,7 @@ function App() {
           </button>
           <button
             onClick={handleNext}
-            className={`pointer-events-auto w-10 h-10 rounded-full bg-black/30 border border-amber-500/30 flex items-center justify-center backdrop-blur-md text-amber-200 hover:bg-black/50 hover:border-amber-400 active:scale-95 transition-all shadow-[0_0_15px_rgba(251,191,36,0.15)] ${fasesLista.indexOf(faseTexto) >= 0 && fasesLista.indexOf(faseTexto) < fasesLista.length - 1 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            className={`pointer-events-auto w-10 h-10 rounded-full bg-black/30 border border-amber-500/30 flex items-center justify-center backdrop-blur-md text-amber-200 sm:hover:bg-black/50 sm:hover:border-amber-400 active:scale-95 transition-all shadow-[0_0_15px_rgba(251,191,36,0.15)] ${fasesLista.indexOf(faseTexto) >= 0 && fasesLista.indexOf(faseTexto) < fasesLista.length - 1 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           >
             <svg
               className="w-6 h-6 mr-[-2px]"
