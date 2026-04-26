@@ -70,6 +70,7 @@ function App() {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
   const audioRef = useRef(new Audio(cancion));
+  const timeoutsRef = useRef([]);
 
   // --- LÓGICA DE LOS BOTONES ---
 
@@ -94,6 +95,30 @@ function App() {
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=${fechas}&details=${detalles}&location=${ubicacion}`;
   };
 
+  // --- NAVEGACIÓN MANUAL DE FASES ---
+  const fasesLista = ["TITULO", "NOMBRE", "INVITACION", "DATOS", "DETALLES"];
+
+  const limpiarTimeouts = () => {
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+  };
+
+  const handleNext = () => {
+    limpiarTimeouts();
+    const index = fasesLista.indexOf(faseTexto);
+    if (index >= 0 && index < fasesLista.length - 1) {
+      setFaseTexto(fasesLista[index + 1]);
+    }
+  };
+
+  const handlePrev = () => {
+    limpiarTimeouts();
+    const index = fasesLista.indexOf(faseTexto);
+    if (index > 0) {
+      setFaseTexto(fasesLista[index - 1]);
+    }
+  };
+
   const terminarVideo1 = () => {
     if (estado === "VIDEO1") setEstado("ROSA");
   };
@@ -103,21 +128,33 @@ function App() {
     setEstado("VIDEO2");
     if (videoRef2.current) videoRef2.current.play();
 
-    setTimeout(() => {
-      setFaseTexto("TITULO");
+    limpiarTimeouts();
+
+    timeoutsRef.current.push(
       setTimeout(() => {
-        setFaseTexto("NOMBRE");
-        setTimeout(() => {
-          setFaseTexto("INVITACION");
+        setFaseTexto("TITULO");
+        timeoutsRef.current.push(
           setTimeout(() => {
-            setFaseTexto("DATOS");
-            setTimeout(() => {
-              setFaseTexto("DETALLES");
-            }, 8000);
-          }, 8000);
-        }, 8000);
-      }, 9000);
-    }, 1500);
+            setFaseTexto("NOMBRE");
+            timeoutsRef.current.push(
+              setTimeout(() => {
+                setFaseTexto("INVITACION");
+                timeoutsRef.current.push(
+                  setTimeout(() => {
+                    setFaseTexto("DATOS");
+                    timeoutsRef.current.push(
+                      setTimeout(() => {
+                        setFaseTexto("DETALLES");
+                      }, 8000),
+                    );
+                  }, 8000),
+                );
+              }, 8000),
+            );
+          }, 9000),
+        );
+      }, 1500),
+    );
   };
 
   return (
@@ -194,6 +231,9 @@ function App() {
           loop
           className={`absolute inset-0 w-full h-full object-cover z-0 scale-105 transition-opacity duration-1000 ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
         />
+
+        {/* --- CAPA TRASPARENTE DE AJUSTE DE COLOR SOBRE VIDEOS --- */}
+        <div className="absolute inset-0 bg-black/50 z-5 pointer-events-none"></div>
 
         {/* ELEMENTOS AMBIENTALES */}
         <div
@@ -534,6 +574,48 @@ function App() {
               />
             </div>
           </div>
+        </div>
+
+        {/* BOTONES DE NAVEGACIÓN MANUAL */}
+        <div
+          className={`absolute bottom-8 left-0 right-0 w-full flex justify-between px-3 z-40 pointer-events-none transition-opacity duration-1000 ${estado === "VIDEO2" && faseTexto !== "OCULTO" ? "opacity-100" : "opacity-0"}`}
+        >
+          <button
+            onClick={handlePrev}
+            className={`pointer-events-auto w-10 h-10 rounded-full bg-black/30 border border-amber-500/30 flex items-center justify-center backdrop-blur-md text-amber-200 hover:bg-black/50 hover:border-amber-400 active:scale-95 transition-all shadow-[0_0_15px_rgba(251,191,36,0.15)] ${fasesLista.indexOf(faseTexto) > 0 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          >
+            <svg
+              className="w-6 h-6 ml-[-2px]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </button>
+          <button
+            onClick={handleNext}
+            className={`pointer-events-auto w-10 h-10 rounded-full bg-black/30 border border-amber-500/30 flex items-center justify-center backdrop-blur-md text-amber-200 hover:bg-black/50 hover:border-amber-400 active:scale-95 transition-all shadow-[0_0_15px_rgba(251,191,36,0.15)] ${fasesLista.indexOf(faseTexto) >= 0 && fasesLista.indexOf(faseTexto) < fasesLista.length - 1 ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          >
+            <svg
+              className="w-6 h-6 mr-[-2px]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+          </button>
         </div>
 
         {/* BOTÓN ROSA */}
