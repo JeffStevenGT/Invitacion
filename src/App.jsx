@@ -1,35 +1,31 @@
 import { useState, useRef } from "react";
 
 import videoFondo from "./assets/video1.mp4";
-import videoFondo2 from "./assets/video2.mp4"; // <-- Importamos el segundo video
+import videoFondo2 from "./assets/video2.mp4";
 import imgRosa from "./assets/img0.png";
 import cancion from "./assets/song1.mp3";
 import fondoFinal from "./assets/bg.jpg";
 
 function App() {
-  const [estado, setEstado] = useState("VIDEO1"); // Cambiado a VIDEO1 para mayor claridad
+  const [estado, setEstado] = useState("VIDEO1");
   const [invitacionVisible, setInvitacionVisible] = useState(false);
 
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
   const audioRef = useRef(new Audio(cancion));
 
-  // Al terminar el primer video, mostramos la rosa
   const terminarVideo1 = () => {
     if (estado === "VIDEO1") setEstado("ROSA");
   };
 
-  // Al pulsar la rosa, iniciamos música y pasamos al video 2
   const iniciarVideo2 = () => {
     audioRef.current.play().catch((e) => console.error("Error audio:", e));
     setEstado("VIDEO2");
-    // Forzamos el play del segundo video
     if (videoRef2.current) {
       videoRef2.current.play();
     }
   };
 
-  // Al terminar el segundo video, mostramos la carta
   const terminarVideo2 = () => {
     setEstado("TRANSICION");
     setTimeout(() => {
@@ -118,7 +114,7 @@ function App() {
           className={`absolute inset-0 w-full h-full object-cover z-0 scale-105 transition-opacity duration-500 ${estado === "VIDEO1" ? "opacity-100" : "opacity-0"}`}
         />
 
-        {/* VIDEO 2 (Se activa al pulsar la rosa) */}
+        {/* VIDEO 2: Sin el tinte */}
         <video
           ref={videoRef2}
           src={videoFondo2}
@@ -127,18 +123,18 @@ function App() {
           className={`absolute inset-0 w-full h-full object-cover z-0 scale-105 transition-opacity duration-500 ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
         />
 
-        {/* CAPA DE TINTE (Para ambos videos) */}
+        {/* CAPA DE TINTE: Solo visible durante el VIDEO 1 */}
         <div
-          className={`absolute inset-0 z-10 pointer-events-none transition-opacity duration-500 ${estado === "VIDEO1" || estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 z-10 pointer-events-none transition-opacity duration-500 ${estado === "VIDEO1" ? "opacity-100" : "opacity-0"}`}
           style={estiloTinteVideo}
         ></div>
 
         {/* CAPA DE LA ROSA (BG.JPG) */}
         <div
-          className={`absolute inset-0 z-20 flex flex-col justify-end items-center pb-[10%] transition-opacity duration-[1000ms] ease-in-out ${estado === "ROSA" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+          className={`absolute inset-0 z-20 flex flex-col justify-end items-center pb-[5%] transition-opacity duration-[1000ms] ease-in-out ${estado === "ROSA" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
           style={bgImagenEscena}
         >
-          <div className="flex flex-col items-center mb-[12%] pb-[5%] z-30">
+          <div className="flex flex-col items-center pt-[32%] mb-[12%] pb-[5%] z-30">
             <p className="text-amber-200 text-[3.5vw] sm:text-sm font-light tracking-[0.4em] uppercase mb-[1vh] font-serif drop-shadow-[0_2px_15px_rgba(0,0,0,1)] relative z-10 animate-pulse">
               Pulsa aquí
             </p>
