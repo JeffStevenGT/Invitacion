@@ -291,25 +291,25 @@ function App() {
               />
               <div className="flex flex-col items-center justify-center gap-0 z-20 overflow-visible w-full">
                 <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   Con mucha ilusión quiero invitarte
                 </p>
                 <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   a compartir conmigo un día único.
                 </p>
                 <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   Será una noche para celebrar,
                 </p>
                 <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   recordar y disfrutar juntos.
@@ -394,7 +394,7 @@ function App() {
                 className="absolute top-0 left-0 w-full h-auto z-10 pointer-events-none"
                 alt="deco3"
               />
-              <div className="z-20 flex flex-col items-center mt-22 gap-6 w-full overflow-visible">
+              <div className="z-20 flex flex-col items-center gap-6 w-full overflow-visible">
                 <div className="flex flex-col items-center overflow-visible">
                   <div className="flex items-center gap-3 mb-1 opacity-60">
                     <div className="h-[1px] w-6 bg-amber-500"></div>
@@ -454,7 +454,7 @@ function App() {
                     href={generarLinkCalendario()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="pointer-events-auto w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md"
+                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md`}
                   >
                     <svg
                       className="w-4 h-4"
@@ -475,7 +475,7 @@ function App() {
                     href={linkWhatsApp}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="pointer-events-auto w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md"
+                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md`}
                   >
                     <svg
                       className="w-4 h-4"
@@ -496,7 +496,7 @@ function App() {
                     href={linkMaps}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="pointer-events-auto w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md"
+                    className={`${faseTexto === "DETALLES" ? "pointer-events-auto" : "pointer-events-none"} w-full rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[10px] uppercase font-sans transition-all active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md`}
                   >
                     <svg
                       className="w-4 h-4"
@@ -524,12 +524,12 @@ function App() {
 
               <img
                 src={img9}
-                className={`absolute bottom-0 -left-15 w-[40vw] max-w-[360px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"}`}
+                className={`absolute bottom-0 left-0 w-[40vw] max-w-[160px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"}`}
                 alt="princesa"
               />
               <img
                 src={img10}
-                className={`absolute bottom-0 -right-15 w-[40vw] max-w-[360px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"}`}
+                className={`absolute bottom-0 right-0 w-[40vw] max-w-[160px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"}`}
                 alt="bestia"
               />
             </div>
