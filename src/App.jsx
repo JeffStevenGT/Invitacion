@@ -69,6 +69,34 @@ function App() {
   const videoRef2 = useRef(null);
   const audioRef = useRef(new Audio(cancion));
 
+  // --- LÓGICA DE LOS BOTONES INTERACTIVOS ---
+
+  // 1. Enlace de WhatsApp
+  // IMPORTANTE: Cambia este número por el que recibirá las confirmaciones (con código de país, sin el "+")
+  const numeroWhatsApp = "51902539586";
+  const mensajeWhatsApp = encodeURIComponent(
+    "¡Hola! Confirmo mi asistencia a los 15 años de Ericka Valentina. 🎉",
+  );
+  const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensajeWhatsApp}`;
+
+  // 2. Generador de Evento para Google Calendar
+  const generarLinkCalendario = () => {
+    const titulo = encodeURIComponent("Mis 15 Años - Ericka Valentina");
+    const detalles = encodeURIComponent(
+      "¡Te espero para celebrar juntos mi día especial!",
+    );
+    const ubicacion = encodeURIComponent(
+      "Salón La Mansión, Av. Principal 123, Trujillo",
+    );
+
+    // Formato de Google Calendar: YYYYMMDDTHHmmssZ (Hora en formato UTC)
+    // 24 de Mayo de 2026, de 8:00 PM (20:00 Perú UTC-5) a 2:00 AM (Día siguiente)
+    // 20:00 Perú = 01:00 UTC (del día siguiente).
+    const fechas = "20260525T010000Z/20260525T070000Z";
+
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=${fechas}&details=${detalles}&location=${ubicacion}`;
+  };
+
   const terminarVideo1 = () => {
     if (estado === "VIDEO1") setEstado("ROSA");
   };
@@ -86,6 +114,9 @@ function App() {
           setFaseTexto("INVITACION");
           setTimeout(() => {
             setFaseTexto("DATOS");
+            setTimeout(() => {
+              setFaseTexto("DETALLES");
+            }, 8000);
           }, 8000);
         }, 8000);
       }, 9000);
@@ -141,7 +172,6 @@ function App() {
           -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
           filter: drop-shadow(0 0 15px rgba(251,191,36,0.3)); 
           display: inline-block; white-space: normal; overflow: visible !important;
-          padding: 10px 20px; margin: -10px -20px;
         }
 
         .animacion-rosa { animation: latidoRosa 2s infinite ease-in-out; }
@@ -169,7 +199,7 @@ function App() {
 
         {/* ELEMENTOS AMBIENTALES */}
         <div
-          className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-1000 ${faseTexto === "INVITACION" || faseTexto === "DATOS" ? "opacity-0" : "opacity-100"}`}
+          className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-1000 ${faseTexto === "INVITACION" || faseTexto === "DATOS" || faseTexto === "DETALLES" ? "opacity-0" : "opacity-100"}`}
         >
           <div className="luz-vertice top-[-50px] left-[-50px]" />
           <div className="luz-vertice bottom-[-50px] right-[-50px]" />
@@ -301,7 +331,6 @@ function App() {
             </div>
 
             {/* FASE 4: PADRES Y PADRINOS */}
-
             <div
               className={`flex flex-col items-center justify-center transition-all duration-[3000ms] absolute inset-0 overflow-visible px-14 ${faseTexto === "DATOS" ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-md pointer-events-none"}`}
             >
@@ -366,6 +395,131 @@ function App() {
               <img
                 src={img4}
                 className="absolute bottom-0 left-0 w-full h-auto z-10"
+                alt="deco4"
+              />
+            </div>
+
+            {/* FASE 5: DETALLES DEL EVENTO Y BOTONES */}
+            <div
+              className={`flex flex-col items-center justify-center transition-all duration-[3000ms] absolute inset-0 overflow-visible px-10 ${faseTexto === "DETALLES" ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-md pointer-events-none"}`}
+            >
+              <img
+                src={img3}
+                className="absolute top-0 left-0 w-full h-auto z-10 pointer-events-none"
+                alt="deco3"
+              />
+
+              <div className="z-20 flex flex-col items-center gap-6 w-full overflow-visible">
+                {/* Cuándo (Fecha y Hora) */}
+                <div className="flex flex-col items-center overflow-visible">
+                  <div className="flex items-center gap-3 mb-1 opacity-60">
+                    <div className="h-[1px] w-6 bg-amber-500"></div>
+                    <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
+                      Cuándo
+                    </span>
+                    <div className="h-[1px] w-6 bg-amber-500"></div>
+                  </div>
+                  <p
+                    className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1"
+                    style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                  >
+                    Sábado, 24 de Mayo
+                  </p>
+                  <p
+                    className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1"
+                    style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                  >
+                    a las 08:00 PM
+                  </p>
+                </div>
+
+                {/* Dónde (Lugar) */}
+                <div className="flex flex-col items-center overflow-visible">
+                  <div className="flex items-center gap-3 mb-1 opacity-60">
+                    <div className="h-[1px] w-6 bg-amber-500"></div>
+                    <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
+                      Dónde
+                    </span>
+                    <div className="h-[1px] w-6 bg-amber-500"></div>
+                  </div>
+                  <p
+                    className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1 text-center"
+                    style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                  >
+                    Salón "La Mansión"
+                  </p>
+                  <p className="text-amber-50/70 text-[10px] tracking-widest font-sans uppercase mt-1">
+                    Av. Principal 123, Trujillo
+                  </p>
+                </div>
+
+                {/* Dress Code */}
+                <div className="flex flex-col items-center overflow-visible">
+                  <div className="flex items-center gap-3 mb-1 opacity-60">
+                    <div className="h-[1px] w-6 bg-amber-500"></div>
+                    <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
+                      Dress Code
+                    </span>
+                    <div className="h-[1px] w-6 bg-amber-500"></div>
+                  </div>
+                  <p
+                    className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1"
+                    style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                  >
+                    Elegante
+                  </p>
+                </div>
+
+                {/* Botones Interactivos con Funcionalidad */}
+                <div className="flex flex-col w-full px-6 gap-3 mt-2">
+                  <a
+                    href={generarLinkCalendario()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pointer-events-auto relative w-full overflow-hidden rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[11px] uppercase font-sans transition-all hover:border-amber-400 active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md shadow-[0_0_15px_rgba(251,191,36,0.15)]"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      ></path>
+                    </svg>
+                    Añadir a la agenda
+                  </a>
+                  <a
+                    href={linkWhatsApp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pointer-events-auto relative w-full overflow-hidden rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-900/30 via-amber-600/20 to-amber-900/30 px-4 py-3 text-amber-200 tracking-[0.2em] text-[11px] uppercase font-sans transition-all hover:border-amber-400 active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md shadow-[0_0_15px_rgba(251,191,36,0.15)]"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                    Confirmar Asistencia
+                  </a>
+                </div>
+              </div>
+
+              <img
+                src={img4}
+                className="absolute bottom-0 left-0 w-full h-auto z-10 pointer-events-none"
                 alt="deco4"
               />
             </div>
