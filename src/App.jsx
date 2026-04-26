@@ -180,7 +180,7 @@ function App() {
 
         @keyframes latidoRosa {
           0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)); }
-          50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(255, 0, 0, 1)); }
+          50% { transform: scale(0.85); filter: drop-shadow(0 0 25px rgba(255, 0, 0, 1)); }
         }
 
         .chispa-dorada {
@@ -221,7 +221,7 @@ function App() {
           autoPlay
           muted
           onEnded={terminarVideo1}
-          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-500 ${estado === "VIDEO1" ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 w-full h-full object-cover z-0 scale-105 transition-opacity duration-500 ${estado === "VIDEO1" ? "opacity-100" : "opacity-0"}`}
         />
 
         <video
@@ -331,25 +331,25 @@ function App() {
               />
               <div className="flex flex-col items-center justify-center gap-0 z-20 overflow-visible w-full">
                 <p
-                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   Con mucha ilusión quiero invitarte
                 </p>
                 <p
-                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   a compartir conmigo un día único.
                 </p>
                 <p
-                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   Será una noche para celebrar,
                 </p>
                 <p
-                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   recordar y disfrutar juntos.
@@ -436,7 +436,7 @@ function App() {
               />
               <div className="z-20 flex flex-col items-center gap-6 w-full overflow-visible">
                 <div className="flex flex-col items-center overflow-visible">
-                  <div className="flex items-center gap-3 mb-1 opacity-60">
+                  <div className="flex items-center mt-14 gap-3 mb-1 opacity-60">
                     <div className="h-[1px] w-6 bg-amber-500"></div>
                     <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
                       Cuándo
@@ -453,7 +453,7 @@ function App() {
                     className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1"
                     style={{ fontFamily: "'Fleur De Leah', cursive" }}
                   >
-                    a las 08:00 PM
+                    a las 08:00 pm
                   </p>
                 </div>
                 <div className="flex flex-col items-center overflow-visible">
@@ -468,7 +468,7 @@ function App() {
                     className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1 text-center"
                     style={{ fontFamily: "'Fleur De Leah', cursive" }}
                   >
-                    Salón "La Mansión"
+                    Salón La Mansión
                   </p>
                   <p className="text-amber-50/70 text-[10px] tracking-widest font-sans uppercase mt-1">
                     Av. Principal 123, Trujillo
@@ -489,7 +489,7 @@ function App() {
                     Elegante
                   </p>
                 </div>
-                <div className="flex flex-col w-full px-6 gap-3 mt-2">
+                <div className="flex flex-col w-full px-6 gap-3 mt-4">
                   <a
                     href={generarLinkCalendario()}
                     target="_blank"
@@ -564,12 +564,12 @@ function App() {
 
               <img
                 src={img9}
-                className={`absolute bottom-0 left-0 w-[40vw] max-w-[160px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"}`}
+                className={`absolute bottom-0 -left-23 w-[55vw] max-w-[360px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"}`}
                 alt="princesa"
               />
               <img
                 src={img10}
-                className={`absolute bottom-0 right-0 w-[40vw] max-w-[160px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"}`}
+                className={`absolute bottom-0 -right-23 w-[55vw] max-w-[360px] h-auto z-10 pointer-events-none transition-all duration-[4000ms] ease-out ${faseTexto === "DETALLES" ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"}`}
                 alt="bestia"
               />
             </div>
