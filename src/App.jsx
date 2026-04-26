@@ -235,7 +235,7 @@ function App() {
         {/* --- CAPA TRASPARENTE DE AJUSTE DE COLOR SOBRE VIDEOS --- */}
         <div className="absolute inset-0 bg-black/50 z-5 pointer-events-none"></div>
 
-        {/* ELEMENTOS AMBIENTALES */}
+        {/* ELEMENTOS AMBIENTALES (FLORES Y LUCES) */}
         <div
           className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-1000 ${faseTexto === "INVITACION" || faseTexto === "DATOS" || faseTexto === "DETALLES" ? "opacity-0" : "opacity-100"}`}
         >
@@ -251,41 +251,43 @@ function App() {
             className={`absolute bottom-0 left-0 w-[75vw] max-w-[240px] h-auto overflow-visible transition-all duration-[2500ms] ${estado === "VIDEO2" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             alt="deco"
           />
-          <div
-            className={`absolute inset-0 transition-opacity duration-[1500ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
-          >
-            <div className="absolute top-0 left-0 w-[40%] h-[30%]">
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div
-                  key={`tl-${i}`}
-                  className="chispa-dorada"
-                  style={{
-                    left: `${(i * 17) % 100}%`,
-                    top: `${(i * 13) % 100}%`,
-                    width: "2px",
-                    height: "2px",
-                    animationDuration: `${(i % 3) + 3}s`,
-                    animationDelay: `${i * 0.1}s`,
-                  }}
-                />
-              ))}
-            </div>
-            <div className="absolute bottom-0 right-0 w-[40%] h-[30%]">
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div
-                  key={`br-${i}`}
-                  className="chispa-dorada"
-                  style={{
-                    left: `${(i * 19) % 100}%`,
-                    top: `${(i * 21) % 100}%`,
-                    width: "2px",
-                    height: "2px",
-                    animationDuration: `${(i % 3) + 4}s`,
-                    animationDelay: `${i * 0.15}s`,
-                  }}
-                />
-              ))}
-            </div>
+        </div>
+
+        {/* LLUVIA DORADA (SIEMPRE VISIBLE EN VIDEO 2) */}
+        <div
+          className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-[1500ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
+        >
+          <div className="absolute top-0 left-0 w-[40%] h-[30%]">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div
+                key={`tl-${i}`}
+                className="chispa-dorada"
+                style={{
+                  left: `${(i * 17) % 100}%`,
+                  top: `${(i * 13) % 100}%`,
+                  width: "2px",
+                  height: "2px",
+                  animationDuration: `${(i % 3) + 3}s`,
+                  animationDelay: `${i * 0.1}s`,
+                }}
+              />
+            ))}
+          </div>
+          <div className="absolute bottom-0 right-0 w-[40%] h-[30%]">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div
+                key={`br-${i}`}
+                className="chispa-dorada"
+                style={{
+                  left: `${(i * 19) % 100}%`,
+                  top: `${(i * 21) % 100}%`,
+                  width: "2px",
+                  height: "2px",
+                  animationDuration: `${(i % 3) + 4}s`,
+                  animationDelay: `${i * 0.15}s`,
+                }}
+              />
+            ))}
           </div>
         </div>
 
@@ -331,25 +333,25 @@ function App() {
               />
               <div className="flex flex-col items-center justify-center gap-0 z-20 overflow-visible w-full">
                 <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   Con mucha ilusión quiero invitarte
                 </p>
                 <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   a compartir conmigo un día único.
                 </p>
                 <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   Será una noche para celebrar,
                 </p>
                 <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
                   style={{ fontFamily: "'Fleur De Leah', cursive" }}
                 >
                   recordar y disfrutar juntos.
