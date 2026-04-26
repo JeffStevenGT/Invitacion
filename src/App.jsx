@@ -1,28 +1,24 @@
 import { useState, useRef } from "react";
 
+// Assets
 import videoFondo from "./assets/video1.mp4";
-
 import videoFondo2 from "./assets/video2.mp4";
-
 import imgRosa from "./assets/img0.png";
-
 import cancion from "./assets/song1.mp3";
-
 import fondoFinal from "./assets/bg.jpg";
-
 import decoSuperior from "./assets/img1.png";
-
 import decoInferior from "./assets/img2.png";
+
+// TUS NUEVAS IMÁGENES (Asegúrate de que estén en la carpeta assets)
+import imgDivisor from "./assets/img5.png";
+import imgTexto from "./assets/img6.png";
 
 function App() {
   const [estado, setEstado] = useState("VIDEO1");
-
   const [mostrarTexto, setMostrarTexto] = useState(false);
 
   const videoRef1 = useRef(null);
-
   const videoRef2 = useRef(null);
-
   const audioRef = useRef(new Audio(cancion));
 
   const terminarVideo1 = () => {
@@ -31,33 +27,27 @@ function App() {
 
   const iniciarVideo2 = () => {
     audioRef.current.play().catch((e) => console.error("Error audio:", e));
-
     setEstado("VIDEO2");
 
     if (videoRef2.current) {
       videoRef2.current.play();
     }
 
-    // El texto dorado aparece 1.5 segundos después con su animación
-
+    // Las imágenes aparecen 1.5 segundos después con un fundido
     setTimeout(() => {
       setMostrarTexto(true);
     }, 1500);
   };
 
   // --- ESTILOS DE CAPAS ---
-
   const estiloTinteVideo1 = {
     background: `radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%)`,
   };
 
   const bgImagenEscena = {
     backgroundImage: `linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.2) 100%), url(${fondoFinal})`,
-
     backgroundSize: "cover",
-
     backgroundPosition: "center",
-
     backgroundRepeat: "no-repeat",
   };
 
@@ -68,99 +58,9 @@ function App() {
 
   return (
     <div className="h-[100dvh] w-full bg-black flex items-center justify-center font-sans antialiased relative overflow-hidden">
-      {/* ESTILO CSS PARA EL BRILLO DORADO (SHIMMER) */}
-
-      <style>{`
-
-
-
-        @keyframes shimmer {
-
-
-
-          0% { background-position: -200% center; }
-
-
-
-          100% { background-position: 200% center; }
-
-
-
-        }
-
-
-
-        .texto-dorado-animado {
-
-
-
-          background: linear-gradient(90deg, #b8860b 0%, #f1c40f 50%, #b8860b 100%);
-
-
-
-          background-size: 200% auto;
-
-
-
-          -webkit-background-clip: text;
-
-
-
-          -webkit-text-fill-color: transparent;
-
-
-
-          animation: shimmer 3s linear infinite;
-
-
-
-        }
-
-
-
-        .linea-dorada {
-
-
-
-          height: 1px;
-
-
-
-          background: linear-gradient(90deg, transparent, #f1c40f, transparent);
-
-
-
-          width: 0;
-
-
-
-          transition: width 2s ease-in-out;
-
-
-
-        }
-
-
-
-        .linea-dorada.activa {
-
-
-
-          width: 80%;
-
-
-
-        }
-
-
-
-      `}</style>
-
       {/* CONTENEDOR DEL "TELÉFONO" */}
-
       <div className="w-full h-full sm:max-w-[440px] sm:h-[95vh] bg-black sm:rounded-md relative overflow-hidden z-10 shadow-2xl">
         {/* VIDEO 1 */}
-
         <video
           ref={videoRef1}
           src={videoFondo}
@@ -177,7 +77,6 @@ function App() {
         ></div>
 
         {/* VIDEO 2 (LOOP INFINITO) */}
-
         <video
           ref={videoRef2}
           src={videoFondo2}
@@ -187,7 +86,6 @@ function App() {
         />
 
         {/* DECORACIONES GIGANTES */}
-
         <div
           className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-[1500ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
         >
@@ -204,33 +102,37 @@ function App() {
           />
         </div>
 
-        {/* --- TEXTO DORADO CON TRANSICIÓN DE VIDEO --- */}
-
+        {/* --- NUEVO BLOQUE: IMÁGENES DORADAS (TEXTO Y DIVISORES) --- */}
         <div
-          className={`absolute inset-0 z-20 flex flex-col items-center justify-center transition-all duration-[2000ms] ease-out ${mostrarTexto ? "opacity-100 blur-0 translate-y-0" : "opacity-0 blur-xl translate-y-4"}`}
+          className={`absolute inset-0 z-20 flex flex-col items-center justify-center transition-all duration-[2000ms] ease-out ${mostrarTexto ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-90 translate-y-4"}`}
         >
-          {/* Línea Superior */}
+          {/* Divisor Superior */}
+          <img
+            src={imgDivisor}
+            alt="Adorno Superior"
+            className="w-[80%] max-w-[250px] h-auto object-contain mb-4 drop-shadow-[0_2px_5px_rgba(0,0,0,0.8)]"
+          />
 
-          <div
-            className={`linea-dorada mb-2 ${mostrarTexto ? "activa" : ""}`}
-          ></div>
+          {/* Texto "Mis XV Años" en Imagen */}
+          <img
+            src={imgTexto}
+            alt="Mis XV Años"
+            className="w-[90%] max-w-[320px] h-auto object-contain"
+            style={{
+              mixBlendMode: "screen", // Quita el fondo negro de la imagen JPG
+              filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.8))", // Añade sombra para resaltar
+            }}
+          />
 
-          <h2
-            className={`text-[12vw] sm:text-[55px] text-center font-light tracking-widest transition-all duration-[2500ms] texto-dorado-animado ${mostrarTexto ? "tracking-normal" : "tracking-[1em]"}`}
-            style={{ fontFamily: "'Great Vibes', cursive" }}
-          >
-            Mis 15 Años
-          </h2>
-
-          {/* Línea Inferior */}
-
-          <div
-            className={`linea-dorada mt-2 ${mostrarTexto ? "activa" : ""}`}
-          ></div>
+          {/* Divisor Inferior (Girado para simetría) */}
+          <img
+            src={imgDivisor}
+            alt="Adorno Inferior"
+            className="w-[80%] max-w-[250px] h-auto object-contain mt-4 drop-shadow-[0_2px_5px_rgba(0,0,0,0.8)] rotate-180"
+          />
         </div>
 
         {/* CAPA DE LA ROSA */}
-
         <div
           className={`absolute inset-0 z-30 flex flex-col justify-end items-center pb-[10%] transition-opacity duration-[1000ms] ease-in-out ${estado === "ROSA" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
           style={bgImagenEscena}
