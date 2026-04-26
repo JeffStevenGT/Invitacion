@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // Assets
 import videoFondo from "./assets/video1.mp4";
@@ -71,6 +71,31 @@ function App() {
   const videoRef2 = useRef(null);
   const audioRef = useRef(new Audio(cancion));
   const timeoutsRef = useRef([]);
+
+  // --- REANUDAR VIDEO AL VOLVER A LA PESTAÑA (SOLUCIÓN MÓVIL) ---
+  useEffect(() => {
+    const manejarVisibilidad = () => {
+      if (!document.hidden) {
+        if (estado === "VIDEO1" && videoRef1.current) {
+          videoRef1.current
+            .play()
+            .catch((e) => console.log("Error al reanudar video 1:", e));
+        } else if (estado === "VIDEO2" && videoRef2.current) {
+          videoRef2.current
+            .play()
+            .catch((e) => console.log("Error al reanudar video 2:", e));
+          audioRef.current
+            .play()
+            .catch((e) => console.log("Error al reanudar audio:", e));
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", manejarVisibilidad);
+    return () => {
+      document.removeEventListener("visibilitychange", manejarVisibilidad);
+    };
+  }, [estado]);
 
   // --- LÓGICA DE LOS BOTONES ---
 
@@ -381,55 +406,70 @@ function App() {
               />
             </div>
 
+            {/* FASE 4: PADRES Y PADRINOS (REDISEÑADO) */}
             <div
-              className={`flex flex-col items-center justify-center transition-all duration-[3000ms] absolute inset-0 overflow-visible px-14 ${faseTexto === "DATOS" ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-md pointer-events-none"}`}
+              className={`flex flex-col items-center justify-center transition-all duration-[3000ms] absolute inset-0 overflow-visible px-10 ${faseTexto === "DATOS" ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-md pointer-events-none"}`}
             >
               <img
                 src={img3}
                 className="absolute -top-4 left-0 w-full h-auto z-10"
                 alt="deco3"
               />
-              <div className="z-20 flex flex-col items-center gap-17 w-full overflow-visible">
-                <div className="flex flex-col items-center overflow-visible">
-                  <div className="flex items-center gap-3 mb-4 opacity-60">
-                    <div className="h-[1px] w-8 bg-amber-500"></div>
+              <div className="z-20 flex flex-col items-center gap-6 w-full overflow-visible mt-2">
+                {/* Bloque Padres */}
+                <div className="flex flex-col items-center overflow-visible w-full">
+                  <div className="flex items-center gap-3 mb-3 opacity-80">
+                    <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-amber-500"></div>
                     <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
                       Mis Padres
                     </span>
-                    <div className="h-[1px] w-8 bg-amber-500"></div>
+                    <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-amber-500"></div>
                   </div>
                   <div className="flex flex-col items-center overflow-visible">
                     <p
-                      className="text-[8vw] sm:text-[42px] leading-[1] estilo-dorado-pro py-2"
+                      className="text-[8.5vw] sm:text-[42px] leading-[0.8] estilo-dorado-pro py-1"
                       style={{ fontFamily: "'Fleur De Leah', cursive" }}
                     >
                       Ricardo Antonio Valentina
                     </p>
+                    <span className="text-amber-400/60 font-serif italic text-sm my-1">
+                      &
+                    </span>
                     <p
-                      className="text-[8vw] sm:text-[42px] leading-[1] estilo-dorado-pro py-2"
+                      className="text-[8.5vw] sm:text-[42px] leading-[0.8] estilo-dorado-pro py-1"
                       style={{ fontFamily: "'Fleur De Leah', cursive" }}
                     >
                       María Elena Santos
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col items-center overflow-visible">
-                  <div className="flex items-center gap-3 mb-4 opacity-60">
-                    <div className="h-[1px] w-8 bg-amber-500"></div>
+
+                {/* Separador Central */}
+                <div className="flex items-center justify-center w-full opacity-40 my-1">
+                  <div className="w-1.5 h-1.5 rotate-45 bg-amber-400"></div>
+                </div>
+
+                {/* Bloque Padrinos */}
+                <div className="flex flex-col items-center overflow-visible w-full">
+                  <div className="flex items-center gap-3 mb-3 opacity-80">
+                    <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-amber-500"></div>
                     <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
                       Mis Padrinos
                     </span>
-                    <div className="h-[1px] w-8 bg-amber-500"></div>
+                    <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-amber-500"></div>
                   </div>
                   <div className="flex flex-col items-center overflow-visible">
                     <p
-                      className="text-[8vw] sm:text-[42px] leading-[1] estilo-dorado-pro py-2"
+                      className="text-[8.5vw] sm:text-[42px] leading-[0.8] estilo-dorado-pro py-1"
                       style={{ fontFamily: "'Fleur De Leah', cursive" }}
                     >
                       Carlos Eduardo Méndez
                     </p>
+                    <span className="text-amber-400/60 font-serif italic text-sm my-1">
+                      &
+                    </span>
                     <p
-                      className="text-[8vw] sm:text-[42px] leading-[1] estilo-dorado-pro py-2"
+                      className="text-[8.5vw] sm:text-[42px] leading-[0.8] estilo-dorado-pro py-1"
                       style={{ fontFamily: "'Fleur De Leah', cursive" }}
                     >
                       Lucía Fernanda Ramos
