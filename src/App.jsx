@@ -8,14 +8,62 @@ import cancion from "./assets/song1.mp3";
 import fondoFinal from "./assets/bg.jpg";
 import decoSuperior from "./assets/img1.png";
 import decoInferior from "./assets/img2.png";
+import imgCorona from "./assets/img8.png";
+import img3 from "./assets/img3.png";
+import img4 from "./assets/img4.png";
 
-// TUS NUEVAS IMÁGENES (Asegúrate de que estén en la carpeta assets)
-import imgDivisor from "./assets/img5.png";
-import imgTexto from "./assets/img6.png";
+const SeparadorFiligrana = ({ className }) => (
+  <svg
+    viewBox="0 0 400 30"
+    className={className}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <linearGradient id="gradOro" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="transparent" />
+        <stop offset="20%" stopColor="#bf953f" />
+        <stop offset="50%" stopColor="#fcf6ba" />
+        <stop offset="80%" stopColor="#bf953f" />
+        <stop offset="100%" stopColor="transparent" />
+      </linearGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+        <feMerge>
+          <feMergeNode in="coloredBlur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+    <path
+      d="M10 15 H160 Q170 15 180 5 T200 15 T220 25 Q230 15 240 15 H390"
+      stroke="url(#gradOro)"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      filter="url(#glow)"
+    />
+    <path
+      d="M140 15 Q160 25 180 15 M220 15 Q240 5 260 15"
+      stroke="#fcf6ba"
+      strokeWidth="0.8"
+      opacity="0.6"
+    />
+    <rect
+      x="194"
+      y="9"
+      width="12"
+      height="12"
+      transform="rotate(45 200 15)"
+      fill="url(#gradOro)"
+      stroke="#fff"
+      strokeWidth="0.5"
+    />
+  </svg>
+);
 
 function App() {
   const [estado, setEstado] = useState("VIDEO1");
-  const [mostrarTexto, setMostrarTexto] = useState(false);
+  const [faseTexto, setFaseTexto] = useState("OCULTO");
 
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
@@ -28,39 +76,76 @@ function App() {
   const iniciarVideo2 = () => {
     audioRef.current.play().catch((e) => console.error("Error audio:", e));
     setEstado("VIDEO2");
+    if (videoRef2.current) videoRef2.current.play();
 
-    if (videoRef2.current) {
-      videoRef2.current.play();
-    }
-
-    // Las imágenes aparecen 1.5 segundos después con un fundido
     setTimeout(() => {
-      setMostrarTexto(true);
+      setFaseTexto("TITULO");
+      setTimeout(() => {
+        setFaseTexto("NOMBRE");
+        setTimeout(() => {
+          setFaseTexto("INVITACION");
+        }, 8000);
+      }, 9000);
     }, 1500);
   };
 
-  // --- ESTILOS DE CAPAS ---
-  const estiloTinteVideo1 = {
-    background: `radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%)`,
-  };
-
-  const bgImagenEscena = {
-    backgroundImage: `linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.2) 100%), url(${fondoFinal})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
-
-  const estiloRosaMagica = {
-    filter:
-      "drop-shadow(0 0 15px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 40px rgba(255, 50, 50, 0.5))",
-  };
-
   return (
-    <div className="h-[100dvh] w-full bg-black flex items-center justify-center font-sans antialiased relative overflow-hidden">
-      {/* CONTENEDOR DEL "TELÉFONO" */}
+    <div className="h-[100dvh] w-full bg-black flex items-center justify-center font-sans antialiased relative overflow-hidden text-white">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Imperial+Script&display=swap');
+
+        @keyframes flotarPolvo {
+          0% { transform: translateY(10px) scale(0.5); opacity: 0; }
+          50% { opacity: 0.9; box-shadow: 0 0 10px 3px rgba(251, 191, 36, 0.5); }
+          100% { transform: translateY(-40px) scale(1.2); opacity: 0; }
+        }
+
+        @keyframes titilarEstrella {
+          0%, 100% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+          50% { opacity: 1; transform: scale(1) rotate(180deg); box-shadow: 0 0 12px 3px rgba(255, 255, 255, 0.9); }
+        }
+
+        @keyframes glowEsquina {
+          0%, 100% { opacity: 0.2; transform: scale(1); filter: blur(10px); }
+          50% { opacity: 0.5; transform: scale(1.1); filter: blur(15px); }
+        }
+
+        @keyframes latidoRosa {
+          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)); }
+          50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(255, 0, 0, 1)); }
+        }
+
+        .chispa-dorada {
+          position: absolute; background-color: #fffde7; border-radius: 50%;
+          box-shadow: 0 0 6px 2px rgba(203, 155, 81, 0.8); animation: flotarPolvo linear infinite;
+        }
+
+        .estrella-plata {
+          position: absolute; background-color: #fff;
+          clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+          animation: titilarEstrella 4s infinite ease-in-out;
+        }
+
+        .luz-vertice {
+          position: absolute; width: 220px; height: 220px;
+          background: radial-gradient(circle, rgba(251, 246, 186, 0.25) 0%, transparent 75%);
+          animation: glowEsquina 5s infinite ease-in-out; pointer-events: none;
+        }
+
+        .estilo-dorado-pro {
+          color: #f1c40f;
+          background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+          -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0 0 15px rgba(251,191,36,0.3)); 
+          display: inline-block; white-space: normal; overflow: visible !important;
+          padding: 10px 20px; margin: -10px -20px;
+        }
+
+        .animacion-rosa { animation: latidoRosa 2s infinite ease-in-out; }
+      `}</style>
+
       <div className="w-full h-full sm:max-w-[440px] sm:h-[95vh] bg-black sm:rounded-md relative overflow-hidden z-10 shadow-2xl">
-        {/* VIDEO 1 */}
+        {/* VIDEOS */}
         <video
           ref={videoRef1}
           src={videoFondo}
@@ -68,15 +153,9 @@ function App() {
           autoPlay
           muted
           onEnded={terminarVideo1}
-          className={`absolute inset-0 w-full h-full object-cover z-0 scale-105 transition-opacity duration-500 ${estado === "VIDEO1" ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-500 ${estado === "VIDEO1" ? "opacity-100" : "opacity-0"}`}
         />
 
-        <div
-          className={`absolute inset-0 z-10 pointer-events-none transition-opacity duration-500 ${estado === "VIDEO1" ? "opacity-100" : "opacity-0"}`}
-          style={estiloTinteVideo1}
-        ></div>
-
-        {/* VIDEO 2 (LOOP INFINITO) */}
         <video
           ref={videoRef2}
           src={videoFondo2}
@@ -85,72 +164,201 @@ function App() {
           className={`absolute inset-0 w-full h-full object-cover z-0 scale-105 transition-opacity duration-1000 ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
         />
 
-        {/* DECORACIONES GIGANTES */}
+        {/* ELEMENTOS AMBIENTALES */}
         <div
-          className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-[1500ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-1000 ${faseTexto === "INVITACION" ? "opacity-0" : "opacity-100"}`}
         >
-          <img
-            src={decoSuperior}
-            className={`absolute top-0 right-0 w-[60vw] max-w-[230px] h-auto transition-transform duration-[2000ms] ${estado === "VIDEO2" ? "translate-y-0 scale-100" : "-translate-y-10 scale-90"}`}
-            alt="Deco"
+          <div
+            className={`luz-vertice top-[-50px] left-[-50px] transition-opacity duration-[2000ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
+          />
+          <div
+            className={`luz-vertice bottom-[-50px] right-[-50px] transition-opacity duration-[2000ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
           />
 
-          <img
-            src={decoInferior}
-            className={`absolute bottom-0 left-0 w-[75vw] max-w-[230px] h-auto transition-transform duration-[2000ms] ${estado === "VIDEO2" ? "translate-y-0 scale-100" : "translate-y-10 scale-90"}`}
-            alt="Deco"
-          />
+          <div
+            className={`absolute top-0 right-0 w-[65vw] max-w-[240px] h-auto overflow-visible transition-all duration-[2500ms] ${estado === "VIDEO2" ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+          >
+            <img src={decoSuperior} className="w-full h-auto" alt="deco" />
+            {Array.from({ length: 15 }).map((_, i) => (
+              <div
+                key={`s-star-${i}`}
+                className="estrella-plata"
+                style={{
+                  top: `${(i * 13) % 85}%`,
+                  right: `${(i * 11) % 85}%`,
+                  width: "8px",
+                  height: "8px",
+                  animationDelay: `${i * 0.4}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          <div
+            className={`absolute bottom-0 left-0 w-[75vw] max-w-[240px] h-auto overflow-visible transition-all duration-[2500ms] ${estado === "VIDEO2" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
+            <img src={decoInferior} className="w-full h-auto" alt="deco" />
+            {Array.from({ length: 15 }).map((_, i) => (
+              <div
+                key={`i-star-${i}`}
+                className="estrella-plata"
+                style={{
+                  bottom: `${(i * 13) % 85}%`,
+                  left: `${(i * 11) % 85}%`,
+                  width: "9px",
+                  height: "9px",
+                  animationDelay: `${i * 0.5}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          <div
+            className={`absolute inset-0 transition-opacity duration-[1500ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
+          >
+            <div className="absolute top-0 left-0 w-[40%] h-[30%]">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <div
+                  key={`tl-${i}`}
+                  className="chispa-dorada"
+                  style={{
+                    left: `${(i * 17) % 100}%`,
+                    top: `${(i * 13) % 100}%`,
+                    width: "2px",
+                    height: "2px",
+                    animationDuration: `${(i % 3) + 3}s`,
+                    animationDelay: `${i * 0.1}s`,
+                  }}
+                />
+              ))}
+            </div>
+            <div className="absolute bottom-0 right-0 w-[40%] h-[30%]">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <div
+                  key={`br-${i}`}
+                  className="chispa-dorada"
+                  style={{
+                    left: `${(i * 19) % 100}%`,
+                    top: `${(i * 21) % 100}%`,
+                    width: "2px",
+                    height: "2px",
+                    animationDuration: `${(i % 3) + 4}s`,
+                    animationDelay: `${i * 0.15}s`,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* --- NUEVO BLOQUE: IMÁGENES DORADAS (TEXTO Y DIVISORES) --- */}
-        <div
-          className={`absolute inset-0 z-20 flex flex-col items-center justify-center transition-all duration-[2000ms] ease-out ${mostrarTexto ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-90 translate-y-4"}`}
-        >
-          {/* Divisor Superior */}
-          <img
-            src={imgDivisor}
-            alt="Adorno Superior"
-            className="w-[80%] max-w-[250px] h-auto object-contain mb-4 drop-shadow-[0_2px_5px_rgba(0,0,0,0.8)]"
-          />
+        {/* --- CAPA DE TEXTOS --- */}
+        <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none text-center">
+          <div className="relative w-full h-full flex items-center justify-center overflow-visible">
+            {/* FASE 1: Mis 15 Años */}
+            <div
+              className={`flex flex-col items-center justify-center transition-all duration-[2000ms] absolute inset-0 overflow-visible ${faseTexto === "TITULO" ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
+            >
+              <SeparadorFiligrana className="w-[85%] mb-2" />
+              <h2
+                className="text-[18vw] sm:text-[85px] leading-[0.7] estilo-dorado-pro"
+                style={{ fontFamily: "'Imperial Script', cursive" }}
+              >
+                Mis 15 Años
+              </h2>
+              <SeparadorFiligrana className="w-[85%] mt-2 rotate-180" />
+            </div>
 
-          {/* Texto "Mis XV Años" en Imagen */}
-          <img
-            src={imgTexto}
-            alt="Mis XV Años"
-            className="w-[90%] max-w-[320px] h-auto object-contain"
-            style={{
-              mixBlendMode: "screen", // Quita el fondo negro de la imagen JPG
-              filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.8))", // Añade sombra para resaltar
-            }}
-          />
+            {/* FASE 2: NOMBRE Y CORONA */}
+            <div
+              className={`flex flex-col items-center justify-center transition-all duration-[2000ms] absolute inset-0 mt-[-12vh] overflow-visible ${faseTexto === "NOMBRE" ? "opacity-100 scale-100" : "opacity-0 scale-110"}`}
+            >
+              <img
+                src={imgCorona}
+                className="w-[30vw] max-w-[100px] h-auto mb-[-25px] z-10 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]"
+                alt="Corona"
+              />
+              <div className="flex flex-col items-center overflow-visible">
+                <h1
+                  className="text-[25vw] sm:text-[95px] leading-[0.7] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  Ericka
+                </h1>
+                <h1
+                  className="text-[25vw] sm:text-[95px] leading-[0.7] estilo-dorado-pro mt-[-10px]"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  Valentina
+                </h1>
+              </div>
+            </div>
 
-          {/* Divisor Inferior (Girado para simetría) */}
-          <img
-            src={imgDivisor}
-            alt="Adorno Inferior"
-            className="w-[80%] max-w-[250px] h-auto object-contain mt-4 drop-shadow-[0_2px_5px_rgba(0,0,0,0.8)] rotate-180"
-          />
+            {/* FASE 3: INVITACIÓN FORMAL - CON PX-26 */}
+            <div
+              className={`flex flex-col items-center justify-center transition-all duration-[3000ms] absolute inset-0 overflow-visible px-[5rem] ${faseTexto === "INVITACION" ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-md pointer-events-none"}`}
+            >
+              <img
+                src={img3}
+                className="absolute top-0 left-0 w-full h-auto z-10"
+                alt="deco3"
+              />
+
+              <div className="flex flex-col items-center justify-center gap-0 z-20 overflow-visible w-full">
+                <p
+                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  Con mucha ilusión quiero invitarte
+                </p>
+                <p
+                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  a compartir conmigo un día único:
+                </p>
+                <p
+                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  Será una noche para celebrar,
+                </p>
+                <p
+                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  recordar y disfrutar juntos.
+                </p>
+              </div>
+
+              <img
+                src={img4}
+                className="absolute bottom-0 left-0 w-full h-auto z-10"
+                alt="deco4"
+              />
+            </div>
+          </div>
         </div>
 
-        {/* CAPA DE LA ROSA */}
+        {/* BOTÓN ROSA */}
         <div
-          className={`absolute inset-0 z-30 flex flex-col justify-end items-center pb-[10%] transition-opacity duration-[1000ms] ease-in-out ${estado === "ROSA" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-          style={bgImagenEscena}
+          className={`absolute inset-0 z-30 flex flex-col justify-end items-center pb-[10%] transition-opacity duration-[1000ms] ${estado === "ROSA" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+          style={{
+            backgroundImage: `linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 100%), url(${fondoFinal})`,
+            backgroundSize: "cover",
+          }}
         >
-          <div className="flex flex-col items-center mb-[12%] pb-[5%] z-30">
-            <p className="text-amber-200 text-[3.5vw] sm:text-sm font-light tracking-[0.4em] uppercase mb-[1vh] font-serif drop-shadow-[0_2px_15px_rgba(0,0,0,1)] relative z-10 animate-pulse">
+          <div className="flex flex-col items-center mb-[12%] pb-[5%]">
+            <p className="text-amber-200 text-xs tracking-[0.4em] uppercase mb-4 animate-pulse font-sans">
               Pulsa aquí
             </p>
-
             <button
               onClick={iniciarVideo2}
-              className="bg-transparent border-none outline-none focus:ring-0 active:scale-90 transition-transform relative z-10"
+              className="animacion-rosa active:scale-90 transition-transform"
             >
               <img
                 src={imgRosa}
-                alt="Rosa"
-                style={estiloRosaMagica}
-                className="w-[18vw] max-w-[75px] h-auto object-contain animate-pulse brightness-200"
+                className="w-[18vw] max-w-[75px] brightness-125"
+                alt="rosa"
               />
             </button>
           </div>
