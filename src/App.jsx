@@ -84,6 +84,9 @@ function App() {
         setFaseTexto("NOMBRE");
         setTimeout(() => {
           setFaseTexto("INVITACION");
+          setTimeout(() => {
+            setFaseTexto("DATOS");
+          }, 8000);
         }, 8000);
       }, 9000);
     }, 1500);
@@ -92,7 +95,7 @@ function App() {
   return (
     <div className="h-[100dvh] w-full bg-black flex items-center justify-center font-sans antialiased relative overflow-hidden text-white">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Imperial+Script&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Imperial+Script&family=Montserrat:wght@300;400&display=swap');
 
         @keyframes flotarPolvo {
           0% { transform: translateY(10px) scale(0.5); opacity: 0; }
@@ -166,52 +169,21 @@ function App() {
 
         {/* ELEMENTOS AMBIENTALES */}
         <div
-          className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-1000 ${faseTexto === "INVITACION" ? "opacity-0" : "opacity-100"}`}
+          className={`absolute inset-0 z-15 pointer-events-none transition-opacity duration-1000 ${faseTexto === "INVITACION" || faseTexto === "DATOS" ? "opacity-0" : "opacity-100"}`}
         >
-          <div
-            className={`luz-vertice top-[-50px] left-[-50px] transition-opacity duration-[2000ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
-          />
-          <div
-            className={`luz-vertice bottom-[-50px] right-[-50px] transition-opacity duration-[2000ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
-          />
+          <div className="luz-vertice top-[-50px] left-[-50px]" />
+          <div className="luz-vertice bottom-[-50px] right-[-50px]" />
 
-          <div
+          <img
+            src={decoSuperior}
             className={`absolute top-0 right-0 w-[65vw] max-w-[240px] h-auto overflow-visible transition-all duration-[2500ms] ${estado === "VIDEO2" ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
-          >
-            <img src={decoSuperior} className="w-full h-auto" alt="deco" />
-            {Array.from({ length: 15 }).map((_, i) => (
-              <div
-                key={`s-star-${i}`}
-                className="estrella-plata"
-                style={{
-                  top: `${(i * 13) % 85}%`,
-                  right: `${(i * 11) % 85}%`,
-                  width: "8px",
-                  height: "8px",
-                  animationDelay: `${i * 0.4}s`,
-                }}
-              />
-            ))}
-          </div>
-
-          <div
+            alt="deco"
+          />
+          <img
+            src={decoInferior}
             className={`absolute bottom-0 left-0 w-[75vw] max-w-[240px] h-auto overflow-visible transition-all duration-[2500ms] ${estado === "VIDEO2" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <img src={decoInferior} className="w-full h-auto" alt="deco" />
-            {Array.from({ length: 15 }).map((_, i) => (
-              <div
-                key={`i-star-${i}`}
-                className="estrella-plata"
-                style={{
-                  bottom: `${(i * 13) % 85}%`,
-                  left: `${(i * 11) % 85}%`,
-                  width: "9px",
-                  height: "9px",
-                  animationDelay: `${i * 0.5}s`,
-                }}
-              />
-            ))}
-          </div>
+            alt="deco"
+          />
 
           <div
             className={`absolute inset-0 transition-opacity duration-[1500ms] ${estado === "VIDEO2" ? "opacity-100" : "opacity-0"}`}
@@ -268,7 +240,7 @@ function App() {
               <SeparadorFiligrana className="w-[85%] mt-2 rotate-180" />
             </div>
 
-            {/* FASE 2: NOMBRE Y CORONA */}
+            {/* FASE 2: NOMBRE */}
             <div
               className={`flex flex-col items-center justify-center transition-all duration-[2000ms] absolute inset-0 mt-[-12vh] overflow-visible ${faseTexto === "NOMBRE" ? "opacity-100 scale-100" : "opacity-0 scale-110"}`}
             >
@@ -277,25 +249,61 @@ function App() {
                 className="w-[30vw] max-w-[100px] h-auto mb-[-25px] z-10 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]"
                 alt="Corona"
               />
-              <div className="flex flex-col items-center overflow-visible">
-                <h1
-                  className="text-[25vw] sm:text-[95px] leading-[0.7] estilo-dorado-pro"
-                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
-                >
-                  Ericka
-                </h1>
-                <h1
-                  className="text-[25vw] sm:text-[95px] leading-[0.7] estilo-dorado-pro mt-[-10px]"
-                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
-                >
-                  Valentina
-                </h1>
-              </div>
+              <h1
+                className="text-[25vw] sm:text-[95px] leading-[0.7] estilo-dorado-pro"
+                style={{ fontFamily: "'Fleur De Leah', cursive" }}
+              >
+                Ericka Valentina
+              </h1>
             </div>
 
-            {/* FASE 3: INVITACIÓN FORMAL - CON PX-26 */}
+            {/* FASE 3: INVITACIÓN FORMAL */}
             <div
-              className={`flex flex-col items-center justify-center transition-all duration-[3000ms] absolute inset-0 overflow-visible px-[5rem] ${faseTexto === "INVITACION" ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-md pointer-events-none"}`}
+              className={`flex flex-col items-center justify-center transition-all duration-[3000ms] absolute inset-0 overflow-visible px-[6rem] ${faseTexto === "INVITACION" ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-md pointer-events-none"}`}
+            >
+              <img
+                src={img3}
+                className="absolute top-0 left-0 w-full h-auto z-10"
+                alt="deco3"
+              />
+              <div className="flex flex-col items-center justify-center gap-0 z-20 overflow-visible w-full">
+                <p
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  Con mucha ilusión quiero invitarte
+                </p>
+                <p
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  a compartir conmigo un día único.
+                </p>
+
+                <p
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  Será una noche para celebrar,
+                </p>
+                <p
+                  className="text-[9vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
+                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                >
+                  recordar y disfrutar juntos.
+                </p>
+              </div>
+              <img
+                src={img4}
+                className="absolute bottom-0 left-0 w-full h-auto z-10"
+                alt="deco4"
+              />
+            </div>
+
+            {/* FASE 4: PADRES Y PADRINOS */}
+
+            <div
+              className={`flex flex-col items-center justify-center transition-all duration-[3000ms] absolute inset-0 overflow-visible px-14 ${faseTexto === "DATOS" ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-10 blur-md pointer-events-none"}`}
             >
               <img
                 src={img3}
@@ -303,31 +311,56 @@ function App() {
                 alt="deco3"
               />
 
-              <div className="flex flex-col items-center justify-center gap-0 z-20 overflow-visible w-full">
-                <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
-                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
-                >
-                  Con mucha ilusión quiero invitarte
-                </p>
-                <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
-                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
-                >
-                  a compartir conmigo un día único:
-                </p>
-                <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
-                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
-                >
-                  Será una noche para celebrar,
-                </p>
-                <p
-                  className="text-[10vw] sm:text-[34px] leading-[0.85] estilo-dorado-pro"
-                  style={{ fontFamily: "'Fleur De Leah', cursive" }}
-                >
-                  recordar y disfrutar juntos.
-                </p>
+              <div className="z-20 flex flex-col items-center gap-17 w-full overflow-visible">
+                {/* Bloque Padres */}
+                <div className="flex flex-col items-center overflow-visible">
+                  <div className="flex items-center gap-3 mb-4 opacity-60">
+                    <div className="h-[1px] w-8 bg-amber-500"></div>
+                    <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
+                      Mis Padres
+                    </span>
+                    <div className="h-[1px] w-8 bg-amber-500"></div>
+                  </div>
+                  <div className="flex flex-col items-center overflow-visible">
+                    <p
+                      className="text-[8vw] sm:text-[42px] leading-[1] estilo-dorado-pro py-2"
+                      style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                    >
+                      Ricardo Antonio Valentina
+                    </p>
+                    <p
+                      className="text-[8vw] sm:text-[42px] leading-[1] estilo-dorado-pro py-2"
+                      style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                    >
+                      María Elena Santos
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bloque Padrinos */}
+                <div className="flex flex-col items-center overflow-visible">
+                  <div className="flex items-center gap-3 mb-4 opacity-60">
+                    <div className="h-[1px] w-8 bg-amber-500"></div>
+                    <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
+                      Mis Padrinos
+                    </span>
+                    <div className="h-[1px] w-8 bg-amber-500"></div>
+                  </div>
+                  <div className="flex flex-col items-center overflow-visible">
+                    <p
+                      className="text-[8vw] sm:text-[42px] leading-[1] estilo-dorado-pro py-2"
+                      style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                    >
+                      Carlos Eduardo Méndez
+                    </p>
+                    <p
+                      className="text-[8vw] sm:text-[42px] leading-[1] estilo-dorado-pro py-2"
+                      style={{ fontFamily: "'Fleur De Leah', cursive" }}
+                    >
+                      Lucía Fernanda Ramos
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <img
