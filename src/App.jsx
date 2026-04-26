@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // Assets
 import videoFondo from "./assets/video1.mp4";
@@ -71,6 +71,31 @@ function App() {
   const videoRef2 = useRef(null);
   const audioRef = useRef(new Audio(cancion));
   const timeoutsRef = useRef([]);
+
+  // --- REANUDAR VIDEO AL VOLVER A LA PESTAÑA (SOLUCIÓN MÓVIL) ---
+  useEffect(() => {
+    const manejarVisibilidad = () => {
+      if (!document.hidden) {
+        if (estado === "VIDEO1" && videoRef1.current) {
+          videoRef1.current
+            .play()
+            .catch((e) => console.log("Error al reanudar video 1:", e));
+        } else if (estado === "VIDEO2" && videoRef2.current) {
+          videoRef2.current
+            .play()
+            .catch((e) => console.log("Error al reanudar video 2:", e));
+          audioRef.current
+            .play()
+            .catch((e) => console.log("Error al reanudar audio:", e));
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", manejarVisibilidad);
+    return () => {
+      document.removeEventListener("visibilitychange", manejarVisibilidad);
+    };
+  }, [estado]);
 
   // --- LÓGICA DE LOS BOTONES ---
 
