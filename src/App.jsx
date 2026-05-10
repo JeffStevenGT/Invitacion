@@ -99,24 +99,31 @@ function App() {
 
   // --- LÓGICA DE LOS BOTONES ---
 
-  const numeroWhatsApp = "51902539586";
+  const numeroWhatsApp = "13855808098"; // Sin el 0 inicial para que funcione el link internacional
   const mensajeWhatsApp = encodeURIComponent(
-    "¡Hola! Confirmo mi asistencia a los 15 años de Ericka Valentina. 🎉",
+    "¡Hola! Confirmo mi asistencia a los 15 años de Valery Quintero. 🎉",
   );
   const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensajeWhatsApp}`;
 
   const linkMaps =
-    "https://www.google.com/maps/search/?api=1&query=Salón+La+Mansión+Av+Principal+123+Trujillo";
+    "https://www.google.com/maps/place/Mu%C3%B1equitos+Event+Center/@40.6092944,-111.9377058,17z/data=!4m14!1m7!3m6!1s0x87528dc219d4ade9:0x3b7a136dfafabf7b!2sMu%C3%B1equitos+Event+Center!8m2!3d40.6092944!4d-111.9377058!16s%2Fg%2F11kq381_k7!3m5!1s0x87528dc219d4ade9:0x3b7a136dfafabf7b!8m2!3d40.6092944!4d-111.9377058!16s%2Fg%2F11kq381_k7!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D"; // Tu link actualizado
 
   const generarLinkCalendario = () => {
-    const titulo = encodeURIComponent("Mis 15 Años - Ericka Valentina");
+    const titulo = encodeURIComponent("Mis 15 Años - Valery Quintero");
     const detalles = encodeURIComponent(
       "¡Te espero para celebrar juntos mi día especial!",
     );
     const ubicacion = encodeURIComponent(
-      "Salón La Mansión, Av. Principal 123, Trujillo",
+      "1633 W 7800 S, West Jordan", // Dirección actualizada
     );
-    const fechas = "20260525T010000Z/20260525T070000Z";
+
+    // Formato: AAAAMMDDTHHmmSS
+    // Fecha: 11 de Junio 2026 (20260611)
+    // Hora Inicio: 5:45 PM (17:45:00) -> 20260611T174500
+    // Hora Fin: 11:59 PM (23:59:00) -> 20260611T235900
+    // Nota: Se eliminó la 'Z' al final para que use la hora local del dispositivo del invitado
+    const fechas = "20260611T174500/20260611T235900";
+
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=${fechas}&details=${detalles}&location=${ubicacion}`;
   };
 
@@ -361,7 +368,7 @@ function App() {
                 className="text-[25vw] sm:text-[95px] leading-[0.7] estilo-dorado-pro"
                 style={{ fontFamily: "'Fleur De Leah', cursive" }}
               >
-                Ericka Valentina
+                Valery Quintero
               </h1>
             </div>
 
@@ -506,13 +513,13 @@ function App() {
                     className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1"
                     style={{ fontFamily: "'Fleur De Leah', cursive" }}
                   >
-                    Sábado, 24 de Mayo
+                    Jueves, 11 de Junio
                   </p>
                   <p
                     className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1"
                     style={{ fontFamily: "'Fleur De Leah', cursive" }}
                   >
-                    a las 08:00 pm
+                    a las 05:45 pm
                   </p>
                 </div>
                 <div className="flex flex-col items-center overflow-visible">
@@ -527,10 +534,10 @@ function App() {
                     className="text-[7.5vw] sm:text-[34px] leading-[1] estilo-dorado-pro py-1 text-center"
                     style={{ fontFamily: "'Fleur De Leah', cursive" }}
                   >
-                    Salón La Mansión
+                    Muñequitos Event Center
                   </p>
                   <p className="text-amber-50/70 text-[10px] tracking-widest font-sans uppercase mt-1">
-                    Av. Principal 123, Trujillo
+                    2596 W 4700 S, Taylorsville, Utah 84119
                   </p>
                 </div>
                 <div className="flex flex-col items-center overflow-visible">
