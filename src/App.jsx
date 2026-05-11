@@ -357,7 +357,7 @@ function App() {
             </div>
 
             <div
-              className={`flex flex-col items-center justify-center transition-all duration-[2000ms] absolute inset-0 mt-[-12vh] overflow-visible ${faseTexto === "NOMBRE" ? "opacity-100 scale-100" : "opacity-0 scale-110"}`}
+              className={`flex flex-col items-center justify-center transition-all duration-[2000ms] absolute inset-0 mt-[-12vh] gap-5 overflow-visible ${faseTexto === "NOMBRE" ? "opacity-100 scale-100" : "opacity-0 scale-110"}`}
             >
               <img
                 src={imgCorona}
@@ -365,7 +365,7 @@ function App() {
                 alt="Corona"
               />
               <h1
-                className="text-[25vw] sm:text-[95px] leading-[0.7] estilo-dorado-pro"
+                className="text-[25vw] h-48 sm:text-[95px] leading-[0.7] estilo-dorado-pro"
                 style={{ fontFamily: "'Fleur De Leah', cursive" }}
               >
                 Valery Quintero
@@ -437,7 +437,7 @@ function App() {
                       className="text-[10vw] sm:text-[42px] leading-[0.8] estilo-dorado-pro py-1"
                       style={{ fontFamily: "'Fleur De Leah', cursive" }}
                     >
-                      Wenser polanco
+                      Wenser Polanco
                     </p>
                     <span className="text-amber-400/60 font-serif italic text-sm my-1">
                       &
