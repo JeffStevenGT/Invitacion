@@ -425,19 +425,19 @@ function App() {
               <div className="z-20 flex flex-col items-center gap-6 w-full overflow-visible mt-2">
                 {/* Bloque Padres */}
                 <div className="flex flex-col items-center overflow-visible w-full">
-                  <div className="flex items-center gap-3 mb-3 opacity-80">
+                  <div className="flex items-center gap-6 mb-13 opacity-80">
                     <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-amber-500"></div>
-                    <span className="text-amber-200 uppercase tracking-[0.4em] text-[10px] font-sans">
+                    <span className="text-amber-200 uppercase tracking-[0.4em] text-[13px] font-sans">
                       Mis Padres
                     </span>
                     <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-amber-500"></div>
                   </div>
-                  <div className="flex flex-col items-center overflow-visible">
+                  <div className="flex flex-col gap-6 items-center overflow-visible">
                     <p
-                      className="text-[8.5vw] sm:text-[42px] leading-[0.8] estilo-dorado-pro py-1"
+                      className="text-[10vw] sm:text-[42px] leading-[0.8] estilo-dorado-pro py-1"
                       style={{ fontFamily: "'Fleur De Leah', cursive" }}
                     >
-                      Ricardo Antonio Valentina
+                      Wenser polanco
                     </p>
                     <span className="text-amber-400/60 font-serif italic text-sm my-1">
                       &
@@ -446,17 +446,16 @@ function App() {
                       className="text-[8.5vw] sm:text-[42px] leading-[0.8] estilo-dorado-pro py-1"
                       style={{ fontFamily: "'Fleur De Leah', cursive" }}
                     >
-                      María Elena Santos
+                      Catterine Montero
                     </p>
                   </div>
                 </div>
-
                 {/* Separador Central */}
-                <div className="flex items-center justify-center w-full opacity-40 my-1">
+                {/*<div className="flex items-center justify-center w-full opacity-40 my-1">
                   <div className="w-1.5 h-1.5 rotate-45 bg-amber-400"></div>
                 </div>
-
                 {/* Bloque Padrinos */}
+                {/*{" "}
                 <div className="flex flex-col items-center overflow-visible w-full">
                   <div className="flex items-center gap-3 mb-3 opacity-80">
                     <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-amber-500"></div>
@@ -482,7 +481,8 @@ function App() {
                       Lucía Fernanda Ramos
                     </p>
                   </div>
-                </div>
+                </div>{" "}
+                */}
               </div>
               <img
                 src={img4}
